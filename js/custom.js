@@ -1,8 +1,8 @@
 
 
 (function( $ ) {
-	gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
-	
+	gsap.registerPlugin(ScrollTrigger, ScrollSmoother, DrawSVGPlugin, MotionPathPlugin, GSDevTools);
+	gsap.defaults({ease: 'none'});
 
 
 	/*document ready*/
@@ -11,27 +11,33 @@
 
 		// ScrollTrigger.normalizeScroll(true);
 
-	// create the smooth scroller FIRST!
-	let smoother = ScrollSmoother.create({
-	  smooth: 2,
-	  effects: true,
-	  normalizeScroll: true
-	});
+		// create the smooth scroller FIRST!
+		// let smoother = ScrollSmoother.create({
+		//   smooth: 2,
+		//   effects: true,
+		//   normalizeScroll: true
+		// });
 
-		/*$(function(){
-			$.pixlayout({
-				src: "img/template.jpg",
-				opacity: 0.5,
-				top: 0,
-				left: 0,
-				center: true,
-				clip: true,
-				show: true,
-				previous: false
-			});
-		});*/
 
-	});
+
+		// svg line
+
+		const line = gsap.timeline();
+						// .from(".theLine", {drawSVG:0, duration:4}, 0)
+						// .to('.ball01', {
+						// 	motionPath: {
+						// 		path: 'theLine',
+						// 	}
+						// });
+
+
+
+		// GSDevTools.create({
+		// 	animation: line
+		// });
+
+
+	}); // end ready
 
 
 

@@ -156,11 +156,85 @@
 	</div>
 </div>
 
+	<div id="blocks-container"></div>
+
+    <script type="module">
+      // Импорт необходимых функций из Firebase
+      import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js';
+      import { getDatabase, ref, get } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js';
+
+      // Ваша конфигурация Firebase
+      const firebaseConfig = {
+        apiKey: "AIzaSyDeahIvI8HFEzC5pIMaiX2Cj85XQdkMtd0",
+        authDomain: "opera-nfts.firebaseapp.com",
+        projectId: "opera-nfts",
+        storageBucket: "opera-nfts.appspot.com",
+        messagingSenderId: "241882777973",
+        appId: "1:241882777973:web:5af80bfcb68b435bb46b3c"
+      };
+
+      // Инициализация Firebase
+      const app = initializeApp(firebaseConfig);
+      const database = getDatabase(app);
+
+      // Функция для получения данных из Firebase
+      async function fetchBlocks() {
+        try {
+          const blocksRef = ref(database, 'nfts');
+
+          const snapshot = await get(blocksRef);
+          if (snapshot.exists()) {
+            const blocksData = snapshot.val();
+            renderBlocks(blocksData);
+          } else {
+            console.error('No data available');
+          }
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      }
+
+      // Функция для отображения блоков с изображениями
+      function renderBlocks(blocksData) {
+        const container = document.getElementById('blocks-container');
+
+        Object.keys(blocksData).forEach((blockKey) => {
+          const block = blocksData[blockKey];
+
+          // Создание контейнера для блока
+          const blockDiv = document.createElement('div');
+          blockDiv.classList.add('block');
+
+          // Добавление картинок из блока
+          for (let i = 0; i < 3; i++) {
+            const img = document.createElement('img');
+            img.src = block[i];
+            img.alt = `Image ${i} of ${blockKey}`;
+            img.classList.add('block-image');
+            blockDiv.appendChild(img);
+          }
+
+          // Добавляем блок в контейнер
+          container.appendChild(blockDiv);
+        });
+      }
+
+      // Запуск получения данных при загрузке страницы
+      window.onload = () => {
+        fetchBlocks();
+      };
+    </script>
+
+	<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/slick.min.js"></script>
 	<script src="js/gsap.min.js"></script>
+	<script src="js/GSDevTools3.min.js"></script>
 	<script src="js/ScrollTrigger.min.js"></script>
 	<script src="js/ScrollSmoother.min.js"></script>
+	<script src="js/DrawSVGPlugin3.min.js"></script>
+	<script src="js/MotionPathPlugin.min.js"></script>
 	<script src="js/custom.js"></script>
 </body>
 </html>
